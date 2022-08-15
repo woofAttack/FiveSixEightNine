@@ -4,24 +4,32 @@ using UnityEngine;
 
 public class CellsField : MonoBehaviour
 {
-    private List<CellPutNumber> _cells = new List<CellPutNumber>();
-    private int _selectedNumber = -1;
+    private List<Cell> _cells = new List<Cell>();
     public int Count {get => _cells.Count;}
 
-    public event Action<CellPutNumber> OnClickCell;
-    public event Action<int> OnClickCellNumber;
-    public event Action<int> OnUnselectCellNumber;
+    public event Action<int> OnClickCellIndex;
 
     private void Awake() 
     {
-        GetComponentsInChildren<CellPutNumber>(_cells);
-        if (_cells.Count == 0) throw new Exception("Count cells of CellsField equal 0!");
+        TryInitializeCell();
+        SetupImvokeEventOnClickCell();
+    }
 
+    private void SetupImvokeEventOnClickCell()
+    {
         for (int i = 0, imax = _cells.Count; i < imax; i++)
         {
             int index = i;
             
-            _cells[i].OnClick += () => SelectClickedCell(index);            
+            _cells[index].OnClick += () => OnClickCellIndex?.Invoke(index);            
+        }
+    }
+    private void TryInitializeCell()
+    {
+        if (_cells == null || _cells.Count == 0)
+        {
+            GetComponentsInChildren<Cell>(_cells);
+            if (_cells.Count == 0) throw new Exception("Count cells of CellsField equal 0!");
         }
     }
 
@@ -33,43 +41,40 @@ public class CellsField : MonoBehaviour
 
     public void SetTextToCellBy(string text)
     {
-        SetTextToCellBy(_selectedNumber, text);
+
     }
 
     public void SetSelectedCellAsTrueCell()
     {
-        _cells[_selectedNumber].Unselect();
-        OnUnselectCellNumber?.Invoke(_selectedNumber);
-        _cells[_selectedNumber].SetTrue();
-        _cells[_selectedNumber].SetClickedState();
+
     }
 
     public void SetSelectedCellAsFalseCell()
     {
-        _cells[_selectedNumber].Unselect();
-        OnUnselectCellNumber?.Invoke(_selectedNumber);
-        
-        _cells[_selectedNumber].SetFalse();
-        _cells[_selectedNumber].SetClickedState();
+
     }
 
-    private void SelectClickedCell(int index)
+    public void SetStateGuessCellNumber(int index, bool resultGuessing)
     {
-        if (_selectedNumber != -1) 
+        if (resultGuessing == true)
         {
-            _cells[_selectedNumber].Unselect();
-            OnUnselectCellNumber?.Invoke(_selectedNumber);
+            SetSelectedCellAsTrueCell();
+        }
+        else
+        {
+            SetSelectedCellAsFalseCell();
+        }
+    }
 
-            if (_cells[_selectedNumber].Equals(_cells[index])) 
-            {
-                _selectedNumber = -1;
-                return;
-            }
-        } 
+    public void SelectClickedCell(int index)
+    {
 
-        _selectedNumber = index;
-        _cells[_selectedNumber].Select();
-
-        OnClickCellNumber?.Invoke(index);
     } 
+
+    public void UnselectClickedCell(int index)
+    {
+
+    } 
+
+
 }

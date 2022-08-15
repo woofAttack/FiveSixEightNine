@@ -29,8 +29,7 @@ public abstract class PresenterSetup : MonoBehaviour
 public class HiddenArrayNumbersSetupSimple : PresenterSetup
 {
     private IFactoryHiddenArrayNumbers _factory;
-    private CellsField _fieldGame; // Условно
-    private CellsFieldNumber _cellsFieldForPlay; // Откуда взять?
+    private CellsField _cellsFieldForPlay; // Откуда взять?
     private protected override void PostAwake()
     {
         _factory = new FactoryArrayFromFixedNumbers(new FixedNumbersForGuessing(new int[]{5, 6, 8, 9}));

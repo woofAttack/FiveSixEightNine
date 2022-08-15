@@ -18,7 +18,9 @@ public class TestPresenter : MonoBehaviour
         var hiddenArray = _factory.Product(6).ToArray();
         var hiddenArrayNumber = new HiddenArrayNumber(hiddenArray);
 
-        new HiddenArrayNumbersPresenter(hiddenArrayNumber, fixedNumbers, _fieldGame, _buttons);
+        _buttons.CreateGameNumberButtons(fixedNumbers.GetFixedNumber().ToArray());
+
+        new HiddenArrayNumbersPresenter(hiddenArrayNumber, _fieldGame, _buttons);
 
         PrintNumbers(hiddenArray);
     }

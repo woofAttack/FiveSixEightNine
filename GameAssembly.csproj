@@ -41,10 +41,8 @@
      <Compile Include="Assets\Scripts\Core\FixedNumberForGuessing.cs" />
      <Compile Include="Assets\Scripts\Core\HiddenArrayNumber.cs" />
      <Compile Include="Assets\Scripts\Core\RuleCorrectHiddenNumber.cs" />
-     <Compile Include="Assets\Scripts\View\Cells.cs" />
      <Compile Include="Assets\Scripts\View\CellsField.cs" />
-     <Compile Include="Assets\Scripts\View\CellsFieldNumber.cs" />
-     <Compile Include="Assets\Scripts\View\Crazy\CellPutNumber.cs" />
+     <Compile Include="Assets\Scripts\View\Crazy\Cell.cs" />
      <Compile Include="Assets\Scripts\View\Crazy\ComponentableHundler.cs" />
      <Compile Include="Assets\Scripts\View\Crazy\IComponentSelectable.cs" />
      <Compile Include="Assets\Scripts\View\Crazy\IComponentUnselectable.cs" />

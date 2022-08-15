@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class TestCellPutNumber : MonoBehaviour
 {
-    [SerializeField] private CellPutNumber _cell;
+    [SerializeField] private Cell _cell;
 
     [SerializeField] private Button _button1;
     [SerializeField] private Button _button2;
@@ -16,7 +16,7 @@ public class TestCellPutNumber : MonoBehaviour
         _button2.onClick.AddListener(() => _cell.Unselect());
     }
 
-    public void SelectCell(CellPutNumber cell)
+    public void SelectCell(Cell cell)
     {
         _cell = cell;
     }

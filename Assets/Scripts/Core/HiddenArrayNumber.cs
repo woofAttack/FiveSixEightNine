@@ -42,6 +42,11 @@ public class HiddenArrayNumber
         return Enumerable.SequenceEqual(_guessedNumbers, _hiddenNumbers);
     }
 
+    public bool WasNumberGuessedBy(int index)
+    {
+        return _guessedNumbers[index] != NOT_YET_GUESS_NUMBER;
+    }
+
 
     public override string ToString()
     {
