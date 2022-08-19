@@ -44,37 +44,64 @@ public class CellsField : MonoBehaviour
 
     }
 
-    public void SetSelectedCellAsTrueCell()
+    public void SetSelectedCellAsTrueCell(int index)
     {
-
+        _cells[index].SetTrue();
     }
 
-    public void SetSelectedCellAsFalseCell()
+    public void SetSelectedCellAsFalseCell(int index)
     {
+        _cells[index].SetFalse();
+    }
 
+    public void PlayAnimationCell(int index)
+    {
+        _cells[index].PlayAnimation();
     }
 
     public void SetStateGuessCellNumber(int index, bool resultGuessing)
     {
         if (resultGuessing == true)
         {
-            SetSelectedCellAsTrueCell();
+            SetSelectedCellAsTrueCell(index);
         }
         else
         {
-            SetSelectedCellAsFalseCell();
+            SetSelectedCellAsFalseCell(index);
         }
     }
+    public void SetStateGuessCellNumber(int index, Func<bool> resultGuessing)
+    {
+        SetStateGuessCellNumber(index, resultGuessing.Invoke());
+    }
+
 
     public void SelectClickedCell(int index)
     {
-
+        _cells[index].Select();
     } 
 
     public void UnselectClickedCell(int index)
     {
-
+        _cells[index].Unselect();
     } 
+
+    public void ClearCells()
+    {
+        foreach(var cell in _cells)
+        {
+            cell.Unselect();
+            cell.SetTextNumber("");
+        }
+    }
+
+    public void StopAnimationsCells()
+    {
+        foreach(var cell in _cells)
+        {
+            cell.StopAnimation();
+        }
+    }
 
 
 }

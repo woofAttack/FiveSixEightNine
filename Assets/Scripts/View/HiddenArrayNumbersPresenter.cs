@@ -17,14 +17,21 @@ public class HiddenArrayNumbersPresenter
         _hiddenArray = hiddenArray;
         _fieldGame = fieldGame;
         _buttons = buttons;
-
-        Setup();
     }
 
-    private void Setup()
+    public void Enable()
     {
         _fieldGame.OnClickCellIndex += SetCurrentCellNumberForGuess;
         _buttons.OnClickButtonNumber += TryGuess;
+    }
+
+    public void Disable()
+    {
+        _fieldGame.OnClickCellIndex -= SetCurrentCellNumberForGuess;
+        _buttons.OnClickButtonNumber -= TryGuess;
+
+        _fieldGame.ClearCells();
+        _buttons.DestroyGameNumberButtons();
     }
 
     private void SetCurrentCellNumberForGuess(int index) 
@@ -69,6 +76,8 @@ public class HiddenArrayNumbersPresenter
 
         _fieldGame.SetTextToCellBy(_selectedCellNumber, number.ToString());
         _fieldGame.SetStateGuessCellNumber(_selectedCellNumber, resultGuessing);
+
+        _selectedCellNumber = UNSELECTED_CELL_NUMBER;
     }
     
 

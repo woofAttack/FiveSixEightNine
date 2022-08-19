@@ -16,6 +16,8 @@ public class Cell : ComponentableHundler, IPointerClickHandler
         InitializationComponentable<IComponentUnselectable>();
         InitializationComponentable<IComponentTrueable>();
         InitializationComponentable<IComponentFalseable>();
+        InitializationComponentable<IComponentStartAnimation>();
+        InitializationComponentable<IComponentStopAnimation>();
     }
 
     public void Select()
@@ -36,6 +38,16 @@ public class Cell : ComponentableHundler, IPointerClickHandler
     public void SetFalse()
     {
         InvokeActions<IComponentFalseable>();
+    }
+
+    public void PlayAnimation()
+    {
+        InvokeActions<IComponentStartAnimation>();
+    }
+
+    public void StopAnimation()
+    {
+        InvokeActions<IComponentStopAnimation>();
     }
 
 

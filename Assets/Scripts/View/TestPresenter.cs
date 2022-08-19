@@ -8,21 +8,48 @@ public class TestPresenter : MonoBehaviour
 
     [SerializeField] private CellsField _fieldGame; // Условно
     [SerializeField] private GamePanelButtonGuessing _buttons;
+    [SerializeField] private ShadowNumbers _shadowNumber;
+    [SerializeField] private TimerUI _timerUI;
+    [SerializeField] private float _timeForGuesiing;
     [SerializeField] private int[] _numbers;
 
-    private void Awake() 
+    private HiddenArrayNumber _hiddenArrayNumber;
+    private HiddenArrayNumbersPresenter _testPresenter;
+
+    public void StartGame() 
     {
         var fixedNumbers = new FixedNumbersForGuessing(_numbers);
         _factory = new FactoryArrayFromFixedNumbers(fixedNumbers);
 
-        var hiddenArray = _factory.Product(6).ToArray();
-        var hiddenArrayNumber = new HiddenArrayNumber(hiddenArray);
+        var hiddenArray = _factory.Product(_fieldGame.Count).ToArray();
+        _hiddenArrayNumber = new HiddenArrayNumber(hiddenArray);
 
         _buttons.CreateGameNumberButtons(fixedNumbers.GetFixedNumber().ToArray());
 
-        new HiddenArrayNumbersPresenter(hiddenArrayNumber, _fieldGame, _buttons);
+        _shadowNumber.StartShadowPrintNumber(hiddenArray, _timeForGuesiing);
+        _shadowNumber.OnShadowPrintEnd += CreateHiddenArrayNumbersPresenter;
+        
 
-        PrintNumbers(hiddenArray);
+        _timerUI.StartCountDown(_timeForGuesiing);
+
+        _testPresenter = new HiddenArrayNumbersPresenter(_hiddenArrayNumber, _fieldGame, _buttons);
+
+        // PrintNumbers(hiddenArray);
+    }
+
+    public void RestartGame()
+    {
+        OnDisable();
+        StartGame();
+    }
+
+    private void OnDisable() 
+    {   
+        _testPresenter.Disable();
+        _timerUI.Stop();
+        _shadowNumber.Stop();
+
+        _shadowNumber.OnShadowPrintEnd -= CreateHiddenArrayNumbersPresenter;       
     }
 
     private void PrintNumbers(int[] numbers)
@@ -36,6 +63,16 @@ public class TestPresenter : MonoBehaviour
 
         Debug.Log(sb.ToString());
     }
+
+    private void CreateHiddenArrayNumbersPresenter()
+    {
+        _testPresenter.Enable();
+        // _shadowNumber.OnShadowPrintEnd -= CreateHiddenArrayNumbersPresenter;       
+    }
+
+    
 }
+
+
 
 

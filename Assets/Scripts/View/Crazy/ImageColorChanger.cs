@@ -47,6 +47,11 @@ public class ImageColorChanger :
         _basicColor = _image.color; 
     }
 
+    private void OnDisable() 
+    {
+        SetColorInImage(_basicColor);
+    }
+
     private void SetColorInImage(Color color)
     {
         _image.color = color;
